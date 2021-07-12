@@ -7,7 +7,7 @@ import { PlayerState, PLAYER_RADIUS } from "./Player";
 import { Utilities } from "./Utilities";
 
 export const EXPLOSION_RADIUS: number = 42;
-
+//g
 export interface ExplosionState extends EntityState {
     id: number;
     positionX: number;
