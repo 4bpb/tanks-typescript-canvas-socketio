@@ -1,5 +1,5 @@
 import { Client } from "../client/Client";
-import { BarrelState, createBarrel, updateBarrel } from "./barrel";
+import { BarrelState, createBarrel, updateBarrel } from "./Barrel";
 import { BotState, createBot, updateBot } from "./Bot";
 import { BulletState, updateBullet } from "./Bullet";
 import { EntityState } from "./Entity";

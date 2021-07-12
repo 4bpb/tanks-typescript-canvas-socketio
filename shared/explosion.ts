@@ -1,5 +1,5 @@
 import { Client } from "../client/Client";
-import { createBarrel } from "./barrel";
+import { createBarrel } from "./Barrel";
 import { EntityState } from "./Entity";
 import { Game, generateId } from "./Game";
 import { checkCircleCollision } from "./Physics";
