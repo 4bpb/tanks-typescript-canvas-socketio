@@ -60,7 +60,8 @@ export function onPlayerCollide(
     player: PlayerState
 ) {
     delete game.state.healthpack[state.id];
-    player.health + 1;
+    let healUp = 1 - player.health;
+    player.health = player.health + healUp;
     createHealthPack(game);
 }
 
