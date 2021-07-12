@@ -6,7 +6,7 @@ import * as RIVET from "@rivet-gg/api-game";
 import { Connection } from "./Connection";
 import { Utilities } from "../shared/Utilities";
 import { renderBullet } from "../shared/Bullet";
-import { renderBarrel } from "../shared/barrel";
+import { renderBarrel } from "../shared/Barrel";
 import { renderExplosion } from "../shared/Explosion";
 import { renderBot } from "../shared/Bot";
 
