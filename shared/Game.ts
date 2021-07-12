@@ -4,7 +4,7 @@ import { BotState, createBot, updateBot } from "./Bot";
 import { BulletState, updateBullet } from "./Bullet";
 import { EntityState } from "./Entity";
 import { ExplosionState, updateExplosion } from "./Explosion";
-import { HealthPackState } from "./Healthpack";
+import { createHealthPack, HealthPackState, updateHealthPack } from "./Healthpack";
 import { PlayerState, updatePlayer } from "./Player";
 import { Utilities } from "./Utilities";
 
@@ -60,6 +60,7 @@ export function createGame(isServer: boolean): Game {
     if (isServer) {
         for (let i = 0; i < 2; i++) {
             createBot(game)
+            createHealthPack(game)
         }
     }
     return game;
@@ -90,5 +91,8 @@ export function updateGame(game: Game) {
     }
     for(let botID in game.state.bot){
         updateBot(game, game.state.bot[botID], dt);
+    }
+    for(let healthPackID in game.state.healthpack){
+        updateHealthPack(game,game.state.healthpack[healthPackID],dt)
     }
 }

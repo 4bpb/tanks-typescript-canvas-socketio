@@ -109,7 +109,7 @@ export function onBulletCollision(
         state.health -= 1;
         if (state.health <= 0) {
             delete game.state.barrels[state.id];
-            let time = 1
+            let time = 1;
             createExplosion(game, state.positionX, state.positionY, time);
         }
     }

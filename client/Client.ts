@@ -9,6 +9,7 @@ import { renderBullet } from "../shared/Bullet";
 import { renderBarrel } from "../shared/Barrel";
 import { renderExplosion } from "../shared/Explosion";
 import { renderBot } from "../shared/Bot";
+import { renderHealthPack } from "../shared/Healthpack";
 
 const TITLE_TEXT: string = "Tanks!";
 
@@ -340,5 +341,8 @@ function renderGame(client: Client, ctx: CanvasRenderingContext2D) {
     }
     for(let botID in client.game.state.bot){
         renderBot(client,client.game.state.bot[botID],ctx)
+    }
+    for(let healthPackID in client.game.state.healthpack){
+        renderHealthPack(client,client.game.state.healthpack[healthPackID],ctx)
     }
 }
