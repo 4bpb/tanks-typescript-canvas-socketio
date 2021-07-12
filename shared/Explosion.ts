@@ -47,7 +47,6 @@ export function renderExplosion(
         client.assets.explosion.width * client.assets.scaleFactor;
     let explosionHeight =
         client.assets.explosion.height * client.assets.scaleFactor;
-
     ctx.drawImage(
         client.assets.explosion,
         -explosionWidth / 2,
