@@ -66,7 +66,7 @@ export function shootDelay(game: Game, state: BotState, dt: number) {
 export function updateBot(game: Game, state: BotState, dt: number) {
     for (let playerId in game.state.players) {
         let target = playerId[0];
-
+        //console.log(game.state.players);
         let targetXPos = game.state.players[playerId].positionX;
         let targetYPos = game.state.players[playerId].positionY;
 
@@ -119,7 +119,64 @@ export function updateBot(game: Game, state: BotState, dt: number) {
         }
         break;
     }
+    if (Object.keys(game.state.players).length <= 0) {
+        for (let botID in game.state.bot) {
+            let bot = game.state.bot[botID];
 
+            let targetXPos = game.state.bot[botID].positionX;
+            let targetYPos = game.state.bot[botID].positionY;
+
+            state.aimDir = Math.atan2(
+                -(targetYPos - state.positionY),
+                targetXPos - state.positionX
+            );
+
+            let distance = checkPlayerDistance(
+                state.positionX,
+                state.positionY,
+                BOT_RADIUS,
+                targetXPos,
+                targetYPos,
+                PLAYER_RADIUS
+            );
+            if (distance > 5) {
+                //step 1 add emotions
+                // let dirX = state.positionX - targetXPos
+                // let dirY = state.positionY - targetYPos
+                let dirX = targetXPos - state.positionX;
+                let dirY = targetYPos - state.positionY;
+
+                state.moveX = dirX / distance;
+
+                state.moveY = dirY / distance;
+
+                if (
+                    checkCircleCollision(
+                        state.positionX,
+                        state.positionY,
+                        BOT_RADIUS,
+                        targetXPos,
+                        targetYPos,
+                        PLAYER_RADIUS
+                    )
+                ) {
+                    console.log("Coll true");
+                    let dirX = targetXPos - state.positionX;
+                    let dirY = targetYPos - state.positionY;
+                    let mag = Math.sqrt(dirY * dirY + dirX * dirX);
+                    let offset = BOT_RADIUS + PLAYER_RADIUS;
+                    state.positionX = state.positionX + (dirX / mag) * offset;
+                    state.positionY = state.positionY + (dirY / mag) * offset;
+                    delete game.state.bot[state.id];
+                    createBot(game);
+                }
+                shootDelay(game, state, dt);
+                state.positionX += state.moveX * BOT_MOVE_SPEED * dt;
+                state.positionY += state.moveY * BOT_MOVE_SPEED * dt;
+            }
+            break;
+        }
+    }
     // Move the player based on the move input
 
     // Restrain to bounds
