@@ -253,6 +253,12 @@ function onBotKill(game: Game, state: BotState, killerId?: number) {
             killer.score += 1;
         }
     }
+    if (killerId) {
+        let killer = game.state.players[killerId];
+        if (killer) {
+            killer.score += 1;
+        }
+    }
 
     // Remove this player
     delete game.state.bot[state.id];
