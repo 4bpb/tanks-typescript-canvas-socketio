@@ -1,5 +1,6 @@
 import { Client } from "../client/Client";
 import { createBarrel } from "./Barrel";
+import { BotState } from "./Bot";
 import { EntityState } from "./Entity";
 import { Game, generateId } from "./Game";
 import { checkCircleCollision } from "./Physics";
@@ -73,6 +74,17 @@ export function onPlayerCollide(
     }
 }
 
+export function onBotCollide(game: Game, state: ExplosionState, bot: BotState) {
+    if (game.isServer) {
+        delete game.state.explosion[state.id];
+        delete game.state.bot[bot.id];
+
+        let positionX = Utilities.lerp(-1000, 1000, Math.random());
+        let positionY = Utilities.lerp(-1000, 1000, Math.random());
+        createBarrel(game, positionX, positionY);
+    }
+}
+
 export function updateExplosion(game: Game, state: ExplosionState, dt: number) {
     let time = state.time - dt;
     if (time <= 0) {
@@ -99,6 +111,22 @@ export function updateExplosion(game: Game, state: ExplosionState, dt: number) {
             )
         ) {
             onPlayerCollide(game, state, player);
+        }
+    }
+
+    for (let botID in game.state.bot) {
+        let bot = game.state.bot[botID];
+        if (
+            checkCircleCollision(
+                state.positionX,
+                state.positionY,
+                EXPLOSION_RADIUS,
+                bot.positionX,
+                bot.positionY,
+                PLAYER_RADIUS
+            )
+        ) {
+            onBotCollide(game, state, bot);
         }
     }
 }
