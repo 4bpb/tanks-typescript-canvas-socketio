@@ -1,6 +1,6 @@
 import { Client } from "../client/Client";
 import { createBarrel } from "./Barrel";
-import { BotState } from "./Bot";
+import { BotState, createBot } from "./Bot";
 import { EntityState } from "./Entity";
 import { Game, generateId } from "./Game";
 import { checkCircleCollision } from "./Physics";
@@ -82,6 +82,7 @@ export function onBotCollide(game: Game, state: ExplosionState, bot: BotState) {
         let positionX = Utilities.lerp(-1000, 1000, Math.random());
         let positionY = Utilities.lerp(-1000, 1000, Math.random());
         createBarrel(game, positionX, positionY);
+        createBot(game)
     }
 }
 

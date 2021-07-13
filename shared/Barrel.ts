@@ -1,4 +1,5 @@
 import { Client } from "../client/Client";
+import { BotState } from "./Bot";
 import { BulletState, BULLET_RADIUS } from "./Bullet";
 import { EntityState } from "./Entity";
 import { createExplosion } from "./Explosion";
@@ -64,6 +65,15 @@ export function onPlayerCollide(
     player.positionY = state.positionY + (dirY / mag) * offset;
 }
 
+export function onBotCollide(game: Game, state: BarrelState, bot: BotState) {
+    let dirX = bot.positionX - state.positionX;
+    let dirY = bot.positionY - state.positionY;
+    let mag = Math.sqrt(dirY * dirY + dirX * dirX);
+    let offset = BARREL_RADIUS + PLAYER_RADIUS;
+    bot.positionX = state.positionX + (dirX / mag) * offset;
+    bot.positionY = state.positionY + (dirY / mag) * offset;
+}
+
 export function updateBarrel(game: Game, state: BarrelState, dt: number) {
     for (let playerId in game.state.players) {
         let player = game.state.players[playerId];
@@ -80,7 +90,21 @@ export function updateBarrel(game: Game, state: BarrelState, dt: number) {
             onPlayerCollide(game, state, player);
         }
     }
-    
+    for (let botID in game.state.bot) {
+        let bot = game.state.bot[botID];
+        if (
+            checkCircleCollision(
+                state.positionX,
+                state.positionY,
+                BARREL_RADIUS,
+                bot.positionX,
+                bot.positionY,
+                PLAYER_RADIUS
+            )
+        ) {
+            onBotCollide(game, state, bot);
+        }
+    }
 
     for (let bulletId in game.state.bullets) {
         let bullet = game.state.bullets[bulletId];
