@@ -160,7 +160,7 @@ export function updateBot(game: Game, state: BotState, dt: number) {
                         PLAYER_RADIUS
                     )
                 ) {
-                    console.log("Coll true");
+                    //console.log("Coll true");
                     let dirX = targetXPos - state.positionX;
                     let dirY = targetYPos - state.positionY;
                     let mag = Math.sqrt(dirY * dirY + dirX * dirX);

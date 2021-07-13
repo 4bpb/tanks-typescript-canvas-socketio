@@ -4,7 +4,11 @@ import { BotState, createBot, updateBot } from "./Bot";
 import { BulletState, updateBullet } from "./Bullet";
 import { EntityState } from "./Entity";
 import { ExplosionState, updateExplosion } from "./Explosion";
-import { createHealthPack, HealthPackState, updateHealthPack } from "./Healthpack";
+import {
+    createHealthPack,
+    HealthPackState,
+    updateHealthPack,
+} from "./Healthpack";
 import { PlayerState, updatePlayer } from "./Player";
 import { Utilities } from "./Utilities";
 
@@ -20,13 +24,12 @@ export interface Game {
 }
 
 export interface GameState {
-    bot: { [id:number]: BotState};
+    bot: { [id: number]: BotState };
     players: { [id: number]: PlayerState };
     bullets: { [id: number]: BulletState };
     barrels: { [id: number]: BarrelState };
     explosion: { [id: number]: ExplosionState };
-    healthpack: { [id: number]: HealthPackState}
-
+    healthpack: { [id: number]: HealthPackState };
 }
 
 export function createGame(isServer: boolean): Game {
@@ -58,9 +61,9 @@ export function createGame(isServer: boolean): Game {
     }
 
     if (isServer) {
-        for (let i = 0; i < 5; i++) {
-            createBot(game)
-            createHealthPack(game)
+        for (let i = 0; i < Object.keys(game.state.players).length + 1; i++) {
+            createBot(game);
+            createHealthPack(game);
         }
     }
     return game;
@@ -89,10 +92,10 @@ export function updateGame(game: Game) {
     for (let explosionID in game.state.explosion) {
         updateExplosion(game, game.state.explosion[explosionID], dt);
     }
-    for(let botID in game.state.bot){
+    for (let botID in game.state.bot) {
         updateBot(game, game.state.bot[botID], dt);
     }
-    for(let healthPackID in game.state.healthpack){
-        updateHealthPack(game,game.state.healthpack[healthPackID],dt)
+    for (let healthPackID in game.state.healthpack) {
+        updateHealthPack(game, game.state.healthpack[healthPackID], dt);
     }
 }
