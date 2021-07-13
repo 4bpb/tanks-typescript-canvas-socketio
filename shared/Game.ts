@@ -58,7 +58,7 @@ export function createGame(isServer: boolean): Game {
     }
 
     if (isServer) {
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 5; i++) {
             createBot(game)
             createHealthPack(game)
         }
