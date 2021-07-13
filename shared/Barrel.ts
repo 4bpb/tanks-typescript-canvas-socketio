@@ -80,6 +80,7 @@ export function updateBarrel(game: Game, state: BarrelState, dt: number) {
             onPlayerCollide(game, state, player);
         }
     }
+    
 
     for (let bulletId in game.state.bullets) {
         let bullet = game.state.bullets[bulletId];
