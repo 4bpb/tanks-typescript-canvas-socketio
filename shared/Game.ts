@@ -61,7 +61,8 @@ export function createGame(isServer: boolean): Game {
     }
 
     if (isServer) {
-        for (let i = 0; i < Object.keys(game.state.players).length + 1; i++) {
+        for (let i = 0; i < 5; i++) {
+            //if you want it addaptive based on players add this instead of 5 Object.keys(game.state.players).length + 1
             createBot(game);
             createHealthPack(game);
         }
