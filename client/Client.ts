@@ -305,7 +305,7 @@ function renderMenu(client: Client, ctx: CanvasRenderingContext2D) {
     }
 }
 
-function renderFullscreenMessage(
+export function renderFullscreenMessage(
     client: Client,
     ctx: CanvasRenderingContext2D,
     message: string
@@ -339,10 +339,14 @@ function renderGame(client: Client, ctx: CanvasRenderingContext2D) {
     for (let explosionID in client.game.state.explosion) {
         renderExplosion(client, client.game.state.explosion[explosionID], ctx);
     }
-    for(let botID in client.game.state.bot){
-        renderBot(client,client.game.state.bot[botID],ctx)
+    for (let botID in client.game.state.bot) {
+        renderBot(client, client.game.state.bot[botID], ctx);
     }
-    for(let healthPackID in client.game.state.healthpack){
-        renderHealthPack(client,client.game.state.healthpack[healthPackID],ctx)
+    for (let healthPackID in client.game.state.healthpack) {
+        renderHealthPack(
+            client,
+            client.game.state.healthpack[healthPackID],
+            ctx
+        );
     }
 }
