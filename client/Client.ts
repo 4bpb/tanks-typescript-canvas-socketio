@@ -10,6 +10,7 @@ import { renderBarrel } from "../shared/Barrel";
 import { renderExplosion } from "../shared/Explosion";
 import { renderBot } from "../shared/Bot";
 import { renderHealthPack } from "../shared/Healthpack";
+import { renderTurret, updateTurret } from "../shared/Turrent";
 
 const TITLE_TEXT: string = "Tanks!";
 
@@ -349,4 +350,9 @@ function renderGame(client: Client, ctx: CanvasRenderingContext2D) {
             ctx
         );
     }
+    for (let turretId in client.game.state.turrets) {
+        renderTurret(client, client.game.state.turrets[turretId], ctx);
+    }
 }
+
+

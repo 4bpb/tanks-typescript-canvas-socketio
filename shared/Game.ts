@@ -10,6 +10,7 @@ import {
     updateHealthPack,
 } from "./Healthpack";
 import { PlayerState, updatePlayer } from "./Player";
+import { createTurret, TurretState, updateTurret } from "./Turrent";
 import { Utilities } from "./Utilities";
 
 export interface Game {
@@ -30,6 +31,7 @@ export interface GameState {
     barrels: { [id: number]: BarrelState };
     explosion: { [id: number]: ExplosionState };
     healthpack: { [id: number]: HealthPackState };
+    turrets: { [id: number]: TurretState };
 }
 
 export function createGame(isServer: boolean): Game {
@@ -48,6 +50,7 @@ export function createGame(isServer: boolean): Game {
             explosion: {},
             bot: {},
             healthpack: {},
+            turrets: {},
         },
     };
 
@@ -66,6 +69,13 @@ export function createGame(isServer: boolean): Game {
             createBot(game);
             createHealthPack(game);
         }
+    }
+    // Procedurally create turrets
+    if (isServer) {
+        createTurret(game, -250, -250, 0,0); // Top left
+        createTurret(game, 250, -250, 0,0); // Top right
+        createTurret(game, 250, 250, 0,0); // Bottom right
+        createTurret(game, -250, 250, 0,0); // Bottom left
     }
     return game;
 }
@@ -98,5 +108,8 @@ export function updateGame(game: Game) {
     }
     for (let healthPackID in game.state.healthpack) {
         updateHealthPack(game, game.state.healthpack[healthPackID], dt);
+    }
+    for (let turretId in game.state.turrets) {
+        updateTurret(game, game.state.turrets[turretId], dt);
     }
 }
